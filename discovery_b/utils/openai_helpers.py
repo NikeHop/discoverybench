@@ -1,5 +1,6 @@
 import json
 
+from discovery_b.utils.utils import get_cost
 
 def OPENAI_TOPIC_GEN_MESSAGES(n=10):
     return [
@@ -84,18 +85,16 @@ def create_prompt(usr_msg):
         }
     ]
 
-def get_response(client, prompt, max_retry=5, model="gpt-3.5-turbo", verbose=False):
+def get_response(llm, prompt, max_retry=5, verbose=False):
     n_try = 0
+    total_cost = 0.0
     while n_try < max_retry:
-        response = client.chat.completions.create(
-            model=model,
-            messages=create_prompt(prompt),
-            **OPENAI_GEN_HYP
-        )
-        output = response.choices[0].message.content.strip().strip("```json").strip("```")
+        response = llm.invoke(create_prompt(prompt))
+        total_cost += get_cost(llm, response)
+        output = response.content.strip().strip("```json").strip("```")
         try:
             response_json = json.loads(output)
-            return response_json
+            return response_json, total_cost
         except ValueError:
             if verbose:
                 print(f"Bad JSON output:\n\n{output}")
@@ -106,7 +105,7 @@ def get_response(client, prompt, max_retry=5, model="gpt-3.5-turbo", verbose=Fal
             else:
                 if verbose:
                     print("Retry limit reached")
-    return None
+    return None, total_cost
 
 
 def get_code_fix(client, code, error, max_retry=5, model="gpt-3.5-turbo", verbose=False):

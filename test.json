@@ -1,0 +1,64 @@
+{
+    "query":"Do females portray lower level of wealth compared to males in 1985?",
+    "gold_hypo":"Average wealth for females was lower than that of males in 1985",
+    "gold_workflow":"",
+    "gen_hypo":"```python\nimport pandas as pd\n\n# Load the dataset\nfile_path = '../datasets/discoverybench/nls_incarceration_processed.csv'\ndata = pd.read_csv(file_path)\n\n# Analyze the wealth of females and males in 1985\nwealth_comparison = data.groupby('sex')['composite_wealth_1985'].mean()\n\n# Check if females have lower wealth than males\nhypothesis = \"Females portray a lower level of wealth compared to males in 1985.\"\nfemales_wealth = wealth_comparison['female']\nmales_wealth = wealth_comparison['male']\nstatistical_significance = females_wealth < males_wealth\n\n# Prepare the final answer\nfinal_answer = {\n    \"hypothesis\": hypothesis,\n    \"females_wealth\": females_wealth,\n    \"males_wealth\": males_wealth,\n    \"statistical_significance\": statistical_significance\n}\n\nfinal_answer\n```",
+    "gen_workflow":"",
+    "dataset_meta":{
+        "id": 0,
+        "domain": "sociology",
+        "workflow_tags": "summary statistics, data selection",
+        "domain_knowledge": "Incarceration status can be gauged indirectly by studying the place of residence. If it is 'Jail', or other facilities of detention, incarceration can be assumed. ",
+        "datasets": [
+            {
+                "name": "nls_incarceration_processed.csv",
+                "description": "This dataset was created from the National Longitudinal Study of Youth's 1979 cohort to about the race, wealth, and incarceration status of the participants.",
+                "columns": {
+                    "raw": [
+                        {
+                            "name": "race",
+                            "description": "Race of the respondent (hispanic, black or white)"
+                        },
+                        {
+                            "name": "sex",
+                            "description": "Sex of the respondent (male or female)"
+                        },
+                        {
+                            "name": "ever_jailed",
+                            "description": "A boolean variable that equals 1 if the respondent was jailed between 1985 to 1994"
+                        },
+                        {
+                            "name": "composite_wealth_1985",
+                            "description": "A composite variable creating by summing five wealth variables from the NLS data for the year 1985"
+                        },
+                        {
+                            "name": "composite_wealth_1990",
+                            "description": "A composite variable creating by summing five wealth variables from the NLS data for the year 1990"
+                        },
+                        {
+                            "name": "composite_wealth_1996",
+                            "description": "A composite variable creating by summing five wealth variables from the NLS data for the year 1996"
+                        }
+                    ]
+                }
+            }
+        ],
+        "intermediate": [],
+        "hypotheses": {
+            "main": [
+                {}
+            ],
+            "intermediate": []
+        },
+        "queries": [
+            [
+                {
+                    "qid": 0,
+                    "question_type": "relationship",
+                    "question": "Do females portray lower level of wealth compared to males in 1985?"
+                }
+            ]
+        ]
+    },
+    "dataset_type":"real"
+}
