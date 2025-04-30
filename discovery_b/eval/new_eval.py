@@ -13,6 +13,8 @@ from IPython import embed
 import pstats
 import cProfile
 
+from langchain.chat_models.base import init_chat_model
+
 from discovery_b.eval.lm_utils import run_chatgpt_query_multi_turn
 from discovery_b.utils.arguments import Arguments
 from discovery_b.utils.helpers import (
@@ -398,7 +400,7 @@ async def run_async_eval_gold_vs_gen_NL_hypo_workflow(
     gen_hypo,
     gen_workflow,
     dataset_meta,
-    llm,
+    llm_used,
     dataset_type,
     use_column_metadata=True
 ):
@@ -421,6 +423,8 @@ async def run_async_eval_gold_vs_gen_NL_hypo_workflow(
     # 	r_v_list ← f1_v * score_r
     # accuracy_score = mean(r_v_list)
     # score =   [ recall_context * mean over predicted context(context_score * var_score *rel_score )]
+
+    llm = init_chat_model(model=llm_used,temperature=0.0)
 
     recall_context = 1.0
     eval_rec = {
@@ -569,7 +573,7 @@ def run_eval_gold_vs_gen_NL_hypo_workflow(
     gen_hypo,
     gen_workflow,
     dataset_meta,
-    llm,
+    llm_used,
     dataset_type,
     use_column_metadata=True,
 ):
@@ -593,6 +597,7 @@ def run_eval_gold_vs_gen_NL_hypo_workflow(
     # accuracy_score = mean(r_v_list)
     # score =   [ recall_context * mean over predicted context(context_score * var_score *rel_score )]
 
+    llm = init_chat_model(model=llm_used,temperature=0.0)
     recall_context = 1.0
     eval_rec = {
         "query": query,
