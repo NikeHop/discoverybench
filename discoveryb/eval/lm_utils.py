@@ -18,7 +18,7 @@ if sys.version_info >= (3, 8):
 else:
     from typing_extensions import Literal
 
-from discovery_b.utils.utils import get_cost
+from discoveryb.utils.utils import get_cost
 
 Model = Literal["gpt-4", "gpt-3.5-turbo", "text-davinci-003"]
 

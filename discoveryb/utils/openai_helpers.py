@@ -1,6 +1,6 @@
 import json
 
-from discovery_b.utils.utils import get_cost
+from discoveryb.utils.utils import get_cost
 
 def OPENAI_TOPIC_GEN_MESSAGES(n=10):
     return [

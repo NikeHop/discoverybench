@@ -15,9 +15,9 @@ import cProfile
 
 from langchain.chat_models.base import init_chat_model
 
-from discovery_b.eval.lm_utils import run_chatgpt_query_multi_turn
-from discovery_b.utils.arguments import Arguments
-from discovery_b.utils.helpers import (
+from discoveryb.eval.lm_utils import run_chatgpt_query_multi_turn
+from discoveryb.utils.arguments import Arguments
+from discoveryb.utils.helpers import (
     setup_logger,
     printj,
     round_sympy_expr,
@@ -26,8 +26,8 @@ from discovery_b.utils.helpers import (
     get_const_from_sympy,
     safe_exp,
 )
-from discovery_b.utils.openai_helpers import OPENAI_GEN_HYP, create_prompt, get_response
-from discovery_b.utils.openai_semantic_gen_prompts import *
+from discoveryb.utils.openai_helpers import OPENAI_GEN_HYP, create_prompt, get_response
+from discoveryb.utils.openai_semantic_gen_prompts import *
 
 logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(name)s -   %(message)s",
